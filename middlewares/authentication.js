@@ -11,7 +11,6 @@ function authenticate(req, res, next) {
             }
         })
         .then(currentUser => {
-            console.log(currentUser, "foundUSer authenticate")
             if (currentUser && decoded.role === "admin") {
                 req.loggedUser = {
                     id: decoded.id,
@@ -20,7 +19,7 @@ function authenticate(req, res, next) {
                     role: decoded.role
                 }
                 next()
-            } else {
+            } else if (currentUser) {
                 req.loggedUser = {
                     id: decoded.id,
                     email: decoded.email,
@@ -33,7 +32,7 @@ function authenticate(req, res, next) {
             next({name: "unauthorized"})
         })
     } else {
-        next()
+        next({name: "unauthorized"})
     }
 }
 
