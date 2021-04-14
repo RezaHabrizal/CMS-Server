@@ -1,0 +1,35 @@
+{
+  "name": "ecommerce-server",
+  "version": "1.0.0",
+  "description": "API yang berisikan endpoint yang akan dihit oleh CMS dan customer web",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest --detectOpenHandles --forceExit --runInBand",
+    "dev": "nodemon ../bin/wwww"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/RezaHabrizal/ecommerce-server.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/RezaHabrizal/ecommerce-server/issues"
+  },
+  "homepage": "https://github.com/RezaHabrizal/ecommerce-server#readme",
+  "dependencies": {
+    "bcrypt": "^5.0.1",
+    "cors": "^2.8.5",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "jsonwebtoken": "^8.5.1",
+    "pg": "^8.5.1",
+    "sequelize": "^6.6.2"
+  },
+  "devDependencies": {
+    "jest": "^26.6.3",
+    "lodash": "^4.17.21",
+    "supertest": "^6.1.3"
+  }
+}
