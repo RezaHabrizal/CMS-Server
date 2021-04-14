@@ -1,6 +1,7 @@
 const {User} = require('../models');
 const {comparePassword} = require('../helpers/bcrypt');
 const {signJwt} = require('../helpers/jwt');
+const {OAuth2Client} = require('google-auth-library');
 
 class UserController {
     static register(req, res, next) {
@@ -48,6 +49,55 @@ class UserController {
             } else {
                 next({message: "500"})
             }
+        })
+    }
+
+    static googleLogin(req, res, next) {
+        const client = new OAuth2Client(process.env.CLIENT_ID);
+        let email
+        let name
+        client.verifyIdToken({
+            idToken: req.body.googleToken,
+            audience: process.env.CLIENT_ID
+        })
+        .then((ticket) => {
+            const payload = ticket.getPayload()
+            email = payload.email
+            name = payload.name
+            return User.findOne({
+                where: {
+                    email,
+                }
+            })
+
+        })
+        .then((user) => {
+            if (user) {
+                const access_token = signJwt({
+                    id: user.id,
+                    name: user.name,
+                    email: user.email
+                })
+                res.status(200).json({access_token, name, email, id})
+            } else {
+                return User.create({
+                    email,
+                    name,
+                    avatar,
+                    password: Math.random() * 1000 + "abcxyzs" 
+                })
+            }
+        })
+        .then((newGoogleRegisteredUser) => {
+            const access_token = signJwt({
+                id: newGoogleRegisteredUser.id,
+                name: newGoogleRegisteredUser.name,
+                email: newGoogleRegisteredUser.email
+            })
+            res.status(201).json({access_token, name: newGoogleRegisteredUser.name})
+        })
+        .catch((err) => {
+            next({name: err.name})
         })
     }
 }

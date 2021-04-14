@@ -7,6 +7,7 @@ const {authorizeAdmin, authorizeCustomer} = require('../middlewares/authorizatio
 
 Router.post('/register', UserController.register)
 Router.post('/login', UserController.login)
+Router.post('/googlelogin', UserController.googleLogin)
 
 Router.use(authenticate)
 Router.get('/products', ProductController.showAll)
