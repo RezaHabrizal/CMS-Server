@@ -11,19 +11,20 @@ function authenticate(req, res, next) {
             }
         })
         .then(currentUser => {
+            console.log(currentUser, decoded, "dari authen current user")
             if (currentUser && decoded.role === "admin") {
                 req.loggedUser = {
-                    id: decoded.id,
-                    email: decoded.email,
-                    name: decoded.name,
-                    role: decoded.role
+                    id: currentUser.id,
+                    email: currentUser.email,
+                    name: currentUser.name,
+                    role: currentUser.role
                 }
                 next()
             } else if (currentUser) {
                 req.loggedUser = {
-                    id: decoded.id,
-                    email: decoded.email,
-                    name: decoded.name
+                    id: currentUser.id,
+                    email: currentUser.email,
+                    name: currentUser.name
                 }
                 next()
             }

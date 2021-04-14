@@ -1,4 +1,5 @@
 module.exports = ((err, req, res, next) => {
+    console.log(err, "MASUK ERRORHANDLER")
     switch (err.name) {
         case "invalid username/password":
             res.status(400).json({message: err.name})
