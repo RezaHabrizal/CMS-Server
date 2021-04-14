@@ -48,7 +48,7 @@ class CartController {
 
     static update(req, res, next) {
         const {quantity, status} = req.body
-        Cart.update({...quantity, status}, {
+        Cart.update({quantity, status, userId: req.loggedUser.id}, {
             where: {
                 productId: req.params.id
             }, returning: true
