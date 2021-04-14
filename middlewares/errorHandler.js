@@ -15,6 +15,9 @@ module.exports = ((err, req, res, next) => {
         case "not found": 
             res.status(404).json({message: err.name})
             break
+        case "internal server error":
+            res.status(500).json({message: "internal server error"})
+            break
         default:
             res.status(500).json({message: "internal server error"})
     }

@@ -1,7 +1,6 @@
 const {User, Cart} = require('../models');
 
 function authorizeAdmin(req, res, next) {
-    // console.log(req.loggedUser , "reqLOGGED")
     if (!req.loggedUser) {
         next({name: "unauthorized"})
     } else {
