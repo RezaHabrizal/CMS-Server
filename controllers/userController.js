@@ -1,4 +1,4 @@
-const {User} = require('../models');
+const {User, Baner} = require('../models');
 const {comparePassword} = require('../helpers/bcrypt');
 const {signJwt} = require('../helpers/jwt');
 const {OAuth2Client} = require('google-auth-library');
@@ -109,6 +109,30 @@ class UserController {
         })
         .catch((err) => {
             next({name: err.name, message: err.message})
+        })
+    }
+
+    static createBaner(req, res, next) {
+        let {imageUrl} = req.body.data
+        Baner.create({
+            imageUrl,
+            userId: req.loggedUser.id
+        })
+        .then(created => {
+            res.status(200).json(created)
+        })
+        .catch(err => {
+            next({ name: err.name, message: err.message })
+        })
+    }
+
+    static getBaner (req, res, next) {
+        Baner.findAll()
+        .then((foundBanner) => {
+            res.status(200).json(foundBanner)
+        })
+        .catch(err => {
+            next({ name: err.name, message: err.message })
         })
     }
 }

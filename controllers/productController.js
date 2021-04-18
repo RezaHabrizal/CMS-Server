@@ -23,8 +23,9 @@ class ProductController {
             price,
             stock
         })
-        .then((product) => {
-            res.status(200).json(product)
+        .then((created) => {
+            // created = created.toRupiah()
+            res.status(200).json(created)
         })
         .catch(err => {
             if (err.name === "SequelizeDatabaseError") {
