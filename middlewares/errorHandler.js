@@ -1,5 +1,5 @@
 module.exports = ((err, req, res, next) => {
-    console.log(err, "MASUK ERRORHANDLER")
+    console.log(err.name, "dari err handler<<<<<<<<<<<<<<<<<")
     switch (err.name) {
         case "invalid username/password":
             res.status(400).json({message: err.name})

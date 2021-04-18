@@ -5,8 +5,8 @@ const {OAuth2Client} = require('google-auth-library');
 
 class UserController {
     static register(req, res, next) {
-        const {email, name, password} = req.body
-
+        const {email, name, password} = req.body.data
+        console.log(email)
         User.create({
             email,
             name,
@@ -16,23 +16,33 @@ class UserController {
             res.status(201).json({id: newUser.id, email: newUser.email, name: newUser.name})
         })
         .catch((err) => {
-            console.log(err)
-            res.status(500).json({message: err.message})
+            console.log(err, 'errr dari register controller')
+            if (err.name === 'SequelizeValidationError') {
+                let errors = err.errors.map(e => {
+                    return e.message
+                })
+                next({name: err.name, message: errors})
+            } else {
+                next({name: err.name, message: err.message})
+            }
         })
     }
 
     static login(req, res, next) {
-        const {email, password} = req.body
+        const {email, password} = req.body.data
         User.findOne({where: {email}})
         .then(foundUser => {
             if (foundUser) {
+                console.log(foundUser)
                 const matchPassword = comparePassword(password, foundUser.password)
-                if (matchPassword && foundUser.role === process.env.ROLE) {
-                    const access_token = signJwt({name: foundUser.name, email: foundUser.email, id:foundUser.id, role: "admin"})
-                    res.status(200).json({message: "succes login"})
-                } else if (matchPassword) {
+                if (foundUser.role === process.env.ROLE) {
+                    console.log('ADMIN OK')
+                    const access_token = signJwt({name: foundUser.name, email: foundUser.email, id:foundUser.id, role: 'admin'})
+                    console.log(access_token)
+                    res.status(200).json({access_token, name: foundUser.name, role: 'admin'})
+                } else if (foundUser && matchPassword) {
                     const access_token = signJwt({name: foundUser.name, email: foundUser.email, id: foundUser.id})
-                    res.status(200).json({message: "succes login"})
+                    res.status(200).json({access_token, name: foundUser.name, role: 'user'})
                 } else if (!matchPassword) {
                     next({name: 'invalid username/password'})
                 } 
@@ -41,13 +51,14 @@ class UserController {
             }
         })
         .catch((err) => {
+            console.log(err)
             if (err.name === "SequelizeValidationError") {
                 let errors = err.errors.map(e => {
                     return e.message
                 })
                 next({name: "SequelizeValidationError", message: errors})
             } else {
-                next({message: "500"})
+                next({name: err.name|| "500", message: err.message || 'internal server error'})
             }
         })
     }
@@ -97,7 +108,7 @@ class UserController {
             res.status(201).json({access_token, name: newGoogleRegisteredUser.name})
         })
         .catch((err) => {
-            next({name: err.name})
+            next({name: err.name, message: err.message})
         })
     }
 }

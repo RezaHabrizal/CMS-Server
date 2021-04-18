@@ -3,7 +3,6 @@ const {User, Cart} = require('../models');
 function authorizeAdmin(req, res, next) {
     console.log(req.loggedUser, "req.logged dari authorization")
     if (!req.loggedUser) {
-        console.log("masuk falsy authorize req.logged")
         next({name: "unauthorized"})
     } else {
         User.findOne({
@@ -12,7 +11,6 @@ function authorizeAdmin(req, res, next) {
             }
         })
         .then(foundUser => {
-            console.log(foundUser, "then authorize admin")
             if (foundUser.email === req.loggedUser.email && foundUser.role === req.loggedUser.role) {
                 next()
             } else {
@@ -20,7 +18,6 @@ function authorizeAdmin(req, res, next) {
             }
         })
         .catch(err => {
-            console.log(err, "dari AUTHORIZATION")
             name = err.name || "internal server error"
             next({name})
         })

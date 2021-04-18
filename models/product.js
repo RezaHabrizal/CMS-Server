@@ -11,7 +11,14 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      Product.belongsToMany(models.User, {through: models.Cart, foreignKey: "productId"})
+      Product.belongsToMany(models.User, { through: models.Cart, foreignKey: "productId" })
+    }
+
+    toRupiah () {
+      this.price = new Intl.NumberFormat('id-ID',
+        { style: 'currency', currency: 'IDR', minimumFractionDigits: 0 }
+      ).format(this.price);
+      return this
     }
   };
   Product.init({

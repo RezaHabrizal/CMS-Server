@@ -2,16 +2,18 @@ const {User} = require('../models');
 const {verifyJwt} = require('../helpers/jwt');
 
 function authenticate(req, res, next) {
-    const access_token = req.headers.access_token
+    console.log(req.headers)
+    let access_token = req.headers.access_token
+    console.log(access_token)
     if (access_token) {
         const decoded = verifyJwt(access_token)
+        console.log(decoded, "DECODEDDD")
         User.findOne({
             where: {
                 email: decoded.email
             }
         })
         .then(currentUser => {
-            console.log(currentUser, decoded, "dari authen current user")
             if (currentUser && decoded.role === "admin") {
                 req.loggedUser = {
                     id: currentUser.id,
@@ -33,7 +35,8 @@ function authenticate(req, res, next) {
             next({name: "unauthorized"})
         })
     } else {
-        next({name: "unauthorized"})
+        console.log('masuk gak punya token authenticate')
+        next()
     }
 }
 

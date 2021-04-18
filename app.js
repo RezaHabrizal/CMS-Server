@@ -4,6 +4,7 @@ if (process.env.NODE_ENV !== "production"){
 const express = require('express')
 const app = express()
 const cors = require('cors');
+const port = 3000
 const router = require('./routes/index');
 const errorHandler = require('./middlewares/errorHandler');
 
@@ -14,4 +15,6 @@ app.use(router)
 
 app.use(errorHandler)
 
-module.exports = app
+app.listen(port, () => {
+  console.log('nice to have you ' + port)
+})
