@@ -13,7 +13,7 @@ module.exports = {
     */
    let admin = [{
      name: 'reza',
-     email: 'rz@mail.com',
+     email: 'reza@mail.com',
      password: '123456',
      role: 'adminqweqwe',
      createdAt: new Date(),

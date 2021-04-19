@@ -19,19 +19,19 @@ module.exports = {
       stock: 11
     },
     {
-      name: "gergaji",
+      name: "SEPATU",
       imageUrl: "",
       price: 11,
       stock: 11
     },
     {
-      name: "gergaji",
+      name: "HEADSET",
       imageUrl: "",
       price: 11,
       stock: 11
     },
     {
-      name: "gergaji",
+      name: "PIPA",
       imageUrl: "",
       price: 11,
       stock: 11
