@@ -4,8 +4,7 @@ const {verifyJwt} = require('../helpers/jwt');
 function authenticate(req, res, next) {
     // console.log(req.headers)
     let access_token = req.headers.access_token
-    // console.log(access_token)
-    if (access_token) {
+    if (access_token === true && access_token) {
         const decoded = verifyJwt(access_token)
         // console.log(decoded, "DECODEDDD")
         User.findOne({

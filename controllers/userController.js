@@ -5,7 +5,7 @@ const {OAuth2Client} = require('google-auth-library');
 
 class UserController {
     static register(req, res, next) {
-        const {email, name, password} = req.body.data
+        const {email, name, password} = req.body
         // console.log(email)
         User.create({
             email,
@@ -29,11 +29,11 @@ class UserController {
     }
 
     static login(req, res, next) {
-        const {email, password} = req.body.data
+        const {email, password} = req.body
+        // console.log(req.body)
         User.findOne({where: {email}})
         .then(foundUser => {
             if (foundUser) {
-                // console.log(foundUser)
                 const matchPassword = comparePassword(password, foundUser.password)
                 if (foundUser.role === process.env.ROLE) {
                     // console.log('ADMIN OK')
@@ -45,7 +45,9 @@ class UserController {
                     res.status(200).json({access_token, name: foundUser.name, role: 'user'})
                 } else if (!matchPassword) {
                     next({name: 'invalid username/password'})
-                } 
+                } else {
+                    next({name: 'invalid username/password'})
+                }
             } else {
                 next({name: 'invalid username/password'})
             }
