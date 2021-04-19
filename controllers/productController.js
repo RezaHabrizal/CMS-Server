@@ -5,9 +5,9 @@ class ProductController {
     static showAll(req, res, next) {
         Product.findAll()
         .then(products => {
-            products.map(e => {
-                return e.toRupiah()
-            })
+            // products.map(e => {
+            //     return e.toRupiah()
+            // })
             res.status(200).json(products)
         })
         .catch(err => {
@@ -55,9 +55,9 @@ class ProductController {
             }, returning: true
         })
         .then(updatedProduct => {
-            let updated = updatedProduct[1][0].toRupiah()
+            // let updated = updatedProduct[1][0].toRupiah()
             // console.log(updated, "UPDATEEEEEE")
-            res.status(200).json({updated})
+            res.status(200).json({updated: updatedProduct[1][0]})
         })
         .catch(err => {
             next({name: err.name || "internal server error"})
@@ -71,7 +71,7 @@ class ProductController {
             }
         })
         .then(response => {
-            console.log(response, "RESPONSE DELETE<<<")
+            // console.log(response, "RESPONSE DELETE<<<")
             res.status(200).json({message: "success delete product with id " + req.params.id})
         })
         .catch(err => {

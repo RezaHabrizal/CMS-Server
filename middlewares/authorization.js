@@ -1,7 +1,7 @@
 const {User, Cart} = require('../models');
 
 function authorizeAdmin(req, res, next) {
-    console.log(req.loggedUser, "req.logged dari authorization")
+    // console.log(req.loggedUser, "req.logged dari authorization")
     if (!req.loggedUser) {
         next({name: "unauthorized"})
     } else {

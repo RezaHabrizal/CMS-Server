@@ -6,7 +6,7 @@ const {OAuth2Client} = require('google-auth-library');
 class UserController {
     static register(req, res, next) {
         const {email, name, password} = req.body.data
-        console.log(email)
+        // console.log(email)
         User.create({
             email,
             name,
@@ -16,7 +16,7 @@ class UserController {
             res.status(201).json({id: newUser.id, email: newUser.email, name: newUser.name})
         })
         .catch((err) => {
-            console.log(err, 'errr dari register controller')
+            // console.log(err, 'errr dari register controller')
             if (err.name === 'SequelizeValidationError') {
                 let errors = err.errors.map(e => {
                     return e.message
@@ -33,12 +33,12 @@ class UserController {
         User.findOne({where: {email}})
         .then(foundUser => {
             if (foundUser) {
-                console.log(foundUser)
+                // console.log(foundUser)
                 const matchPassword = comparePassword(password, foundUser.password)
                 if (foundUser.role === process.env.ROLE) {
-                    console.log('ADMIN OK')
+                    // console.log('ADMIN OK')
                     const access_token = signJwt({name: foundUser.name, email: foundUser.email, id:foundUser.id, role: 'admin'})
-                    console.log(access_token)
+                    // console.log(access_token)
                     res.status(200).json({access_token, name: foundUser.name, role: 'admin'})
                 } else if (foundUser && matchPassword) {
                     const access_token = signJwt({name: foundUser.name, email: foundUser.email, id: foundUser.id})
@@ -51,7 +51,7 @@ class UserController {
             }
         })
         .catch((err) => {
-            console.log(err)
+            // console.log(err)
             if (err.name === "SequelizeValidationError") {
                 let errors = err.errors.map(e => {
                     return e.message

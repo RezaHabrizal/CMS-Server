@@ -18,3 +18,5 @@ app.use(errorHandler)
 app.listen(port, () => {
   console.log('nice to have you ' + port)
 })
+
+// module.exports = app
