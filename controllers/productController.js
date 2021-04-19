@@ -1,4 +1,3 @@
-const { compareSync } = require('bcrypt');
 const {Product} = require('../models');
 
 class ProductController {
