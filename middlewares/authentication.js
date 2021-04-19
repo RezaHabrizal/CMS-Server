@@ -3,10 +3,10 @@ const {verifyJwt} = require('../helpers/jwt');
 
 function authenticate(req, res, next) {
     let access_token = req.headers.access_token
-    // console.log(access_token, 'dari authenticate')
-    if (access_token) {
+
+    if (access_token !== "null") {
         const decoded = verifyJwt(access_token)
-        // console.log(decoded, "DECODEDDD")
+
         User.findOne({
             where: {
                 email: decoded.email
@@ -34,7 +34,7 @@ function authenticate(req, res, next) {
             next({name: "unauthorized"})
         })
     } else {
-        // console.log('masuk gak punya token authenticate')
+
         next()
     }
 }
