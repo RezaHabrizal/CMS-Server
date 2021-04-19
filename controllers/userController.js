@@ -30,7 +30,6 @@ class UserController {
 
     static login(req, res, next) {
         const {email, password} = req.body
-        // console.log(req.body)
         User.findOne({where: {email}})
         .then(foundUser => {
             if (foundUser) {
@@ -115,7 +114,7 @@ class UserController {
     }
 
     static createBaner(req, res, next) {
-        let {imageUrl} = req.body.data
+        let {imageUrl} = req.body
         Baner.create({
             imageUrl,
             userId: req.loggedUser.id

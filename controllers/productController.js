@@ -16,7 +16,7 @@ class ProductController {
     }
 
     static create(req, res, next) {
-        const {name, imageUrl, price, stock} = req.body.data
+        const {name, imageUrl, price, stock} = req.body
         Product.create({
             name,
             imageUrl,
@@ -42,7 +42,7 @@ class ProductController {
     }
     
     static update(req, res, next) {
-        const {name, imageUrl, price, stock} = req.body.data
+        const {name, imageUrl, price, stock} = req.body
 
         Product.update({
             name,
