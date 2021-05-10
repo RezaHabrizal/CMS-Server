@@ -1,12 +1,12 @@
 const jwt = require('jsonwebtoken');
-const SECRET_JWT = 'rahasia'
+// const SECRET_JWT = 'rahasia'
 
 function signJwt(payload) {
-    return jwt.sign(payload, SECRET_JWT)
+    return jwt.sign(payload, 'rahasia')
 }
 
 function verifyJwt(token) {
-    return jwt.verify(token, SECRET_JWT)
+    return jwt.verify(token, 'rahasia')
 }
 
 module.exports = {

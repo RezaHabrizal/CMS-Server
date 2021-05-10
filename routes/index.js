@@ -1,9 +1,12 @@
-const Router = require('express').Router();
-const UserController = require('../controllers/userController');
-const ProductController = require('../controllers/productController');
-const CartController = require('../controllers/cartController');
-const authenticate = require('../middlewares/authentication');
-const {authorizeAdmin, authorizeCustomer} = require('../middlewares/authorization');
+const Router = require('express').Router()
+const UserController = require('../controllers/userController')
+const ProductController = require('../controllers/productController')
+const CartController = require('../controllers/cartController')
+const authenticate = require('../middlewares/authentication')
+const {
+  authorizeAdmin,
+  authorizeCustomer,
+} = require('../middlewares/authorization')
 
 Router.post('/register', UserController.register)
 Router.post('/login', UserController.login)
@@ -18,6 +21,7 @@ Router.get('/cart', CartController.showCart)
 Router.use('/cart/:id', authorizeCustomer)
 Router.put('/cart/:id', CartController.update)
 Router.delete('/cart/:id', CartController.delete)
+Router.patch('/products/:id?', ProductController.updateStock)
 
 Router.use('/products', authorizeAdmin)
 Router.post('/baner', UserController.createBaner)

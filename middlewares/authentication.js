@@ -3,7 +3,7 @@ const {verifyJwt} = require('../helpers/jwt');
 
 function authenticate(req, res, next) {
     let access_token = req.headers.access_token
-
+    
     if (access_token !== "null") {
         const decoded = verifyJwt(access_token)
 
